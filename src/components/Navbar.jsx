@@ -46,11 +46,13 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
                             variant='ghost'
                         >Logout</Button>
                     ) : (
-                        <Button
-                            aria-label='login'
-                            onClick={onLogin}
-                            variant='ghost'
-                        >Login</Button>
+                        <Link as={NextLink} href="/login">
+                            <Button
+                                aria-label='login'
+                                onClick={onLogin}
+                                variant='ghost'
+                            >Login</Button>
+                        </Link>
                     )
                     }
                 </Flex>

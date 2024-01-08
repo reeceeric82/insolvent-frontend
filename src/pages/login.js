@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import PasswordInput from "@/components/Password";
-import { Box, Button, Center, FormControl, Heading, Input, useColorMode } from "@chakra-ui/react";
+import NextLink from 'next/link';
+import { Box, Button, Center, FormControl, Heading, Input, Link, Text, useColorMode } from "@chakra-ui/react";
 
 const Login = () => {
     const { colorMode } = useColorMode();
@@ -32,6 +33,10 @@ const Login = () => {
                         </Box>
                     </Center>
                 </Box>
+                <Center mt='2rem'>
+                    <Text px='5px'>Not a member yet?</Text>
+                    <Link as={NextLink} href="/signup" fontWeight='bold'>Sign-up</Link>
+                </Center>
                 <Box height='55vh'></Box>
                 <Footer />
             </Layout>
