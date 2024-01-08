@@ -89,7 +89,8 @@ export default function Home() {
             <Heading width='55%' align='center'>With nearly 400 businesses in the UK entering insolvency every day,
               now you can too with Insolvency.ai.</Heading>
           </Center>
-          <Center pt='2rem'>
+          <Text ml='160px' pt='4rem' fontWeight='bold' fontSize='2xl'>Top Ranked Recently Insolvent Businesses</Text>
+          <Center>
             <DataTable />
           </Center>
         </Box>

@@ -1,9 +1,9 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Text, TableContainer } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Text, TableContainer, useColorMode } from "@chakra-ui/react";
 
 const DataTable = () => {
+    const { colorMode } = useColorMode();
     return (
-        <TableContainer width='80%' borderRadius='10px'>
-            <Text pl='20px' py='5px' fontWeight='bold'>Top Ranked Recently Insolvent Businesses</Text>
+        <TableContainer width='80%' borderRadius='10px' border='4px' borderColor={colorMode === 'light' ? 'yellow.400' : 'blue.400'}>
             <Table variant='simple'>
                 <Thead>
                     <Tr>

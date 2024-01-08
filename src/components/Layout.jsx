@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import { ChakraProvider, Container } from '@chakra-ui/react'
-import theme from './theme'
+import { Container } from '@chakra-ui/react'
 import BackToTopButton from './BackToTop'
 import Navbar from './Navbar'
 
