@@ -13,13 +13,13 @@ const Layout = ({ children, title }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel='icon' href='favicon.ico' />
             </Head>
-            <ChakraProvider theme={theme}>
-                <Navbar />
-                <Container maxW={'100vw'} minH={'100vh'}>
-                    {children}
-                </Container>
-                <BackToTopButton />
-            </ChakraProvider>
+
+            <Navbar />
+            <Container maxW={'100vw'} minH={'100vh'} padding={0} margin={0}>
+                {children}
+            </Container>
+            <BackToTopButton />
+
         </>
     )
 }

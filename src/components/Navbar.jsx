@@ -1,5 +1,6 @@
-import { Box, Button, Flex, useColorMode, Text } from '@chakra-ui/react'
-import { MoonIcon, SunIcon, UnlockIcon, LockIcon } from '@chakra-ui/icons'
+import { Box, Button, Flex, Image, Link, useColorMode } from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import NextLink from 'next/link';
 
 const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -17,13 +18,18 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
             top='0'
             zIndex='100'
         >
-            <Box>
-                <Button
+            <Flex>
+                <Image src={colorMode === 'light' ? '/logo1.png' : '/logo2.png'} alt='Insolvent.ai Logo' boxSize='15px' mt='6px' mr='3px' />
+                <Link
+                    as={NextLink}
+                    aria-label='Insolvent.ai Logo'
+                    color={colorMode === 'light' ? 'black' : 'white'}
                     variant='ghost'
-                    fontWeight={'bold'}>
+                    fontWeight={'bold'}
+                    href='/'>
                     Insolvent.ai
-                </Button>
-            </Box>
+                </Link>
+            </Flex>
 
             <Box>
                 <Flex align={'center'}>
@@ -35,13 +41,13 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
 
                     {isLoggedIn ? (
                         <Button
-                            leftIcon={<LockIcon />}
+                            aria-label='logout'
                             onClick={onLogout}
                             variant='ghost'
                         >Logout</Button>
                     ) : (
                         <Button
-                            leftIcon={<UnlockIcon />}
+                            aria-label='login'
                             onClick={onLogin}
                             variant='ghost'
                         >Login</Button>
