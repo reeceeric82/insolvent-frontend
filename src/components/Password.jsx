@@ -6,7 +6,7 @@ const PasswordInput = () => {
     const handleClick = () => setShow(!show)
 
     return (
-        <InputGroup size='md'>
+        <InputGroup size='md' my='10px'>
             <Input
                 pr='4.5rem'
                 type={show ? 'text' : 'password'}

@@ -14,6 +14,7 @@ const ExpandForm = ({ onSubmit, isExpanded }) => {
                         <Input type="text" placeholder="Enter your name" />
                         <Input my='10px' type="email" placeholder="Enter your email" />
                         <PasswordInput />
+                        <PasswordInput />
                     </FormControl>
                     <Button type="submit" mt={4} bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}>
                         Submit

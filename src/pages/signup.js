@@ -9,7 +9,7 @@ import NextLink from 'next/link';
 const Signup = () => {
     const { colorMode } = useColorMode();
     const [isExpanded, setExpanded] = useState(false);
-    const title = "Singup | Insolvent"
+    const title = "Sign up | Insolvent"
 
     const handleExpandClick = () => {
         setExpanded(!isExpanded)
@@ -17,7 +17,7 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Submition Logic
+        // Add functionality here
         console.log("Form submitted")
     }
 
