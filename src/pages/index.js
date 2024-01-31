@@ -1,9 +1,10 @@
 import Layout from '@/components/Layout'
-import SearchBox from '@/components/AutoComplete';
-import { Box, Center, Grid, GridItem, Heading, Text, useColorMode } from '@chakra-ui/react'
+import AutoComplete from '@/components/AutoComplete';
 import NewsBlob from '@/components/NewsBlob';
 import DataTable from '@/components/DataTable';
 import Footer from '@/components/Footer';
+import { Box, Center, Grid, GridItem, Heading, Text, useColorMode } from '@chakra-ui/react'
+
 
 const dummyData = [
   {
@@ -59,9 +60,9 @@ export default function Home() {
               Aquire Insolvent Businesses
             </Text>
           </Center>
-          <Text pl='14.5rem' pb='1rem' fontWeight='bold'>What are you looking for?</Text>
+
           <Center>
-            <SearchBox />
+            <AutoComplete />
           </Center>
         </Box>
         {/* News Blob */}
@@ -89,7 +90,7 @@ export default function Home() {
             <Heading width='55%' align='center'>With nearly 400 businesses in the UK entering insolvency every day,
               now you can too with Insolvency.ai.</Heading>
           </Center>
-          <Text ml='160px' pt='4rem' fontWeight='bold' fontSize='2xl'>Top Ranked Recently Insolvent Businesses</Text>
+
           <Center>
             <DataTable />
           </Center>
@@ -100,9 +101,8 @@ export default function Home() {
           height='10rem'
           width='100vw'
           pt='3rem'>
-          <Text pl='14.5rem' pb='1rem' fontWeight='bold'>What are you looking for?</Text>
           <Center>
-            <SearchBox />
+            <AutoComplete />
           </Center>
         </Box>
         <Footer />
