@@ -1,13 +1,14 @@
 import PasswordInput from './Password';
-import { Box, Button, FormControl, Input, useColorMode } from "@chakra-ui/react"
+import { Box, Button, FormControl, Input, useColorMode, useMediaQuery } from "@chakra-ui/react"
 
 
 
 const ExpandForm = ({ onSubmit, isExpanded }) => {
     const { colorMode } = useColorMode();
+    const [isMobile] = useMediaQuery('(max-width: 800px)');
 
     return (
-        <Box width='30%' mt='2rem'>
+        <Box width={isMobile ? '80%' : '30%'} mt='2rem'>
             <form onSubmit={onSubmit}>
                 <Box display={isExpanded ? "block" : "none"}>
                     <FormControl isRequired>

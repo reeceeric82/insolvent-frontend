@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Input, Box, List, ListItem, Link, Text, useColorMode } from '@chakra-ui/react';
+import { Input, Box, List, ListItem, Link, Text, useColorMode, useMediaQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import base from '../data/baseOptions';
 import axios from 'axios';
@@ -13,6 +13,7 @@ const AutoComplete = () => {
     const [filteredOptions, setFilteredOptions] = useState([]);
     const [showOptions, setShowOptions] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isMobile] = useMediaQuery("(max-width: 800px)");
 
     const autoCompleteRef = useRef(null);
 
@@ -62,11 +63,13 @@ const AutoComplete = () => {
     };
 
     const handleOptionSelect = (option) => {
-        router.push(`/results?query=${option}`);
+        router.push(`/results/search?query=${option}`);
     };
 
+    
+
     return (
-        <Box position="relative" width="70%">
+        <Box position="relative" width={isMobile ? "90%" : "70%"}>
             <Text pb='1rem' fontWeight='bold'>What are you looking for?</Text>
             <Input
                 value={searchTerm}
@@ -88,7 +91,7 @@ const AutoComplete = () => {
                     boxShadow="md"
                     borderRadius="md"
                     marginTop="2px"
-                    overflow="hidden"
+                    overflow="auto"
                     maxHeight="200px"
                     zIndex="1"
                 >

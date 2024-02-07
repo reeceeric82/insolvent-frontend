@@ -1,12 +1,13 @@
-import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text, Skeleton, useColorMode } from "@chakra-ui/react";
+import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text, Skeleton, useColorMode, useMediaQuery } from "@chakra-ui/react";
 import { useState } from 'react';
 import LoadingAnimation from "./LoadingAnimation";
+
 
 const ResultsTable = ({ isLoading, data }) => {
     const { colorMode } = useColorMode();
     const itemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [isMobile] = useMediaQuery("(max-width: 800px)");
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
@@ -26,7 +27,7 @@ const ResultsTable = ({ isLoading, data }) => {
 
     if (isLoading) {
         return (
-            <Box width='80%'>
+            <Box width={isMobile ? '95%' : '80%'}>
                 <LoadingAnimation />
                 <TableContainer width='100%' borderRadius='10px' border='4px' borderColor={colorMode === 'light' ? 'yellow.400' : 'blue.400'}>
                     <Table variant='simple'>
@@ -57,7 +58,7 @@ const ResultsTable = ({ isLoading, data }) => {
     }
 
     return (
-        <Box width='80%'>
+        <Box width={isMobile ? '95%' : '80%'}>
             <Text pt='4rem' fontWeight='bold' fontSize='2xl'>Search Results</Text>
             <TableContainer width='100%' borderRadius='10px' border='4px' borderColor={colorMode === 'light' ? 'yellow.400' : 'blue.400'}>
                 <Table variant='simple'>
@@ -71,8 +72,8 @@ const ResultsTable = ({ isLoading, data }) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {currentItems.map((item, index) => (
-                            <Tr key={index}>
+                        {currentItems.map((item) => (
+                            <Tr key={item.company_id}>
                                 <Td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     {item.company_title}
                                 </Td>

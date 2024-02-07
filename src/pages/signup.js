@@ -2,13 +2,14 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import ExpandForm from "@/components/Form";
-import { Box, Button, Center, Heading, Link, Text, useColorMode } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Link, Text, useColorMode, useMediaQuery } from "@chakra-ui/react";
 import NextLink from 'next/link';
 
 
 const Signup = () => {
     const { colorMode } = useColorMode();
     const [isExpanded, setExpanded] = useState(false);
+    const [isMobile] = useMediaQuery('(max-width: 800px)');
     const title = "Sign up | Insolvent"
 
     const handleExpandClick = () => {
@@ -37,7 +38,8 @@ const Signup = () => {
                     <Box>
                         <Center>
                             <Button
-                                width='30%'
+                                width={isMobile ? '80%' : '30%'}
+                                color='white'
                                 bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}
                                 _hover={colorMode === 'light' ? 'blue.200' : 'purple.200'}
                                 onClick={handleExpandClick}
