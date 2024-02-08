@@ -1,15 +1,15 @@
-import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text, Skeleton, useColorMode, useMediaQuery, Link } from "@chakra-ui/react";
+import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text, Skeleton, useColorMode, useMediaQuery, Link } from '@chakra-ui/react';
 import { useState } from 'react';
 import {NextLink} from 'next/link';
-import LoadingAnimation from "./LoadingAnimation";
-import { useRouter } from "next/router";
+import LoadingAnimation from './LoadingAnimation';
+import { useRouter } from 'next/router';
 
 
 const ResultsTable = ({ isLoading, data }) => {
     const { colorMode } = useColorMode();
     const itemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
-    const [isMobile] = useMediaQuery("(max-width: 800px)");
+    const [isMobile] = useMediaQuery('(max-width: 800px)');
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
@@ -28,7 +28,7 @@ const ResultsTable = ({ isLoading, data }) => {
     };
 
     const handleClick = (query) => {
-        router.push(`results/company?query=${query}`);
+        router.push(`company?query=${query}`);
     }
 
 
@@ -50,11 +50,11 @@ const ResultsTable = ({ isLoading, data }) => {
                         <Tbody>
                             {[...Array(itemsPerPage)].map((_, index) => (
                                 <Tr key={index}>
-                                    <Td><Skeleton height="20px" width="100px" /></Td>
-                                    <Td><Skeleton height="20px" width="100px" /></Td>
-                                    <Td><Skeleton height="20px" width="100px" /></Td>
-                                    <Td><Skeleton height="20px" width="100px" /></Td>
-                                    <Td><Skeleton height="20px" width="100px" /></Td>
+                                    <Td><Skeleton height='20px' width='100px' /></Td>
+                                    <Td><Skeleton height='20px' width='100px' /></Td>
+                                    <Td><Skeleton height='20px' width='100px' /></Td>
+                                    <Td><Skeleton height='20px' width='100px' /></Td>
+                                    <Td><Skeleton height='20px' width='100px' /></Td>
                                 </Tr>
                             ))}
                         </Tbody>
@@ -88,7 +88,9 @@ const ResultsTable = ({ isLoading, data }) => {
                                     {item.nature_of_business}
                                 </Td>
                                 <Td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                    <Link as={NextLink} href={item.website_url} target='_blank' rel='noreferer'>
                                     {item.website_url}
+                                    </Link>
                                 </Td>
                                 <Td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     {item.domain_auth}

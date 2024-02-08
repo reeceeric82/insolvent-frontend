@@ -61,7 +61,7 @@ const DesktopResults = () => {
         };
 
         fetchData();
-    });
+    }, []);
 
     return (
         <>
@@ -128,7 +128,7 @@ const MobileResults = () => {
         };
 
         fetchData();
-    });
+    }, []);
 
     return (
         <>
