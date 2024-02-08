@@ -1,6 +1,8 @@
-import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text, Skeleton, useColorMode, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Text, Skeleton, useColorMode, useMediaQuery, Link } from "@chakra-ui/react";
 import { useState } from 'react';
+import {NextLink} from 'next/link';
 import LoadingAnimation from "./LoadingAnimation";
+import { useRouter } from "next/router";
 
 
 const ResultsTable = ({ isLoading, data }) => {
@@ -11,6 +13,7 @@ const ResultsTable = ({ isLoading, data }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const router = useRouter();
 
     const nextPage = () => {
         if (currentPage < Math.ceil(data.length / itemsPerPage)) {
@@ -23,6 +26,10 @@ const ResultsTable = ({ isLoading, data }) => {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    const handleClick = (query) => {
+        router.push(`results/company?query=${query}`);
+    }
 
 
     if (isLoading) {
@@ -75,7 +82,7 @@ const ResultsTable = ({ isLoading, data }) => {
                         {currentItems.map((item) => (
                             <Tr key={item.company_id}>
                                 <Td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                    {item.company_title}
+                                    <Link as={NextLink} onClick={() => handleClick(item.company_number)}>{item.company_title}</Link>
                                 </Td>
                                 <Td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     {item.nature_of_business}
