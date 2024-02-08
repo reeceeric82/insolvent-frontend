@@ -53,17 +53,17 @@ const DesktopNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout 
 
                 {isLoggedIn ? (
                     <Button
-                        aria-label='logout'
+                        aria-label='sign out'
                         onClick={onLogout}
                         variant='ghost'
-                    >Logout</Button>
+                    >Sign Out</Button>
                 ) : (
-                    <Link as={NextLink} href="/login">
+                    <Link as={NextLink} href="/signin">
                         <Button
-                            aria-label='login'
+                            aria-label='sign in'
                             onClick={onLogin}
                             variant='ghost'
-                        >Login</Button>
+                        >Sign In</Button>
                     </Link>
                 )
                 }
@@ -76,7 +76,6 @@ const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout, 
     let screenWidth = window.innerWidth;
     function handleResize() {
         screenWidth = window.innerWidth;
-        console.log('Screen width:', screenWidth);
     }
 
     // Initial call to set the initial screen width
@@ -138,22 +137,22 @@ const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout, 
                             <Flex direction='column' align='center'>
                                 {isLoggedIn ? (
                                     <Button
-                                        aria-label='logout'
+                                        aria-label='Sign Out'
                                         onClick={onLogout}
                                         variant='ghost'
                                         mt={3}
                                     >
-                                        Logout
+                                        Sign Out
                                     </Button>
                                 ) : (
-                                    <Link as={NextLink} href='/login'>
+                                    <Link as={NextLink} href='/signin'>
                                         <Button
-                                            aria-label='login'
+                                            aria-label='Sign In'
                                             onClick={onLogin}
                                             variant='ghost'
                                             mt={3}
                                         >
-                                            Login
+                                            Sign In
                                         </Button>
                                     </Link>
                                 )}

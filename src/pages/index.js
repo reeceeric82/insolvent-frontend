@@ -158,7 +158,6 @@ const MobileHome = () => {
             grow their businesses by acquiring insolvent companies.</Heading>
         </Center>
         <VStack mt='3rem'>
-          {/* <Grid templateColumns='repeat(3, 1fr)' gap={20} px={20} pt={10}></Grid> */}
           {dummyData.map((item, idx) => (
             <GridItem key={idx} margin='1rem'>
               <NewsBlob title={item.title} date={item.date} content={item.content} />
