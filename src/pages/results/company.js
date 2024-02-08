@@ -6,13 +6,13 @@ import Layout from '@/components/Layout';
 
 const apiUrl = 'http://127.0.0.1:8000/company/';
 
-const SearchResults = () => {
+const CompanyResult = () => {
     const router = useRouter();
     const query = router.query;
     const [isMobile] = useMediaQuery('(max-width: 800px)');
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const title = `${query.query.companyNumber} | Insolvent.ai`;
+    const title = `${query.query} | Insolvent.ai`;
 
 
 
@@ -40,7 +40,7 @@ const SearchResults = () => {
 
         fetchData();
     })
-
+    console.log(data);
     return (
         <Layout title={title}>
             {/* Create Page 
@@ -51,4 +51,4 @@ const SearchResults = () => {
     )
 }
 
-export default SearchResults;
+export default CompanyResult;
