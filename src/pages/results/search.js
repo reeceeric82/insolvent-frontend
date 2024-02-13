@@ -5,6 +5,7 @@ import axios from "axios";
 import NextLink from 'next/link';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Box, Button, Center, Heading, Link, Text, useColorMode, useMediaQuery } from "@chakra-ui/react";
 
 
@@ -16,11 +17,12 @@ const Results = () => {
     var query = router.query;
     const [isMobile] = useMediaQuery("(max-width: 800px)");
     const title = `Results ${query.query} | Insolvent.ai`;
+    const { data: session, status } = useSession();
 
     return (
         <>
             <Layout title={title}>
-                {isMobile ? <MobileResults /> : <DesktopResults />}
+                {isMobile ? <MobileResults session={session}/> : <DesktopResults session={session}/>}
                 <Footer />
             </Layout>
         </>
@@ -28,7 +30,7 @@ const Results = () => {
 }
 
 
-const DesktopResults = () => {
+const DesktopResults = ({session}) => {
     var router = useRouter();
     var query = router.query;
     const { colorMode } = useColorMode();
@@ -61,7 +63,7 @@ const DesktopResults = () => {
         };
 
         fetchData();
-    }, []);
+    });
 
     return (
         <>
@@ -72,7 +74,7 @@ const DesktopResults = () => {
                 </Center>
 
                 <Center>
-                    <ResultsTable isLoading={isLoading} data={data} />
+                    <ResultsTable isLoading={isLoading} data={data} isLoggedIn={session?.user} />
                 </Center>
                 {/* CTA Updates */}
                 <Box my='6rem' height='12rem' bg={colorMode === 'light' ? 'yellow.400' : 'blue.400'}>
@@ -80,7 +82,7 @@ const DesktopResults = () => {
                         <Text fontSize='3xl'>Stay updated on your industry</Text>
                     </Center>
                     <Center>
-                        <Link as={NextLink} href='/signup'>
+                        <Link as={NextLink} href='/signin'>
                             <Button
                                 bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}
                                 color='white'
@@ -95,7 +97,7 @@ const DesktopResults = () => {
     )
 };
 
-const MobileResults = () => {
+const MobileResults = ({isLoggedIn}) => {
     var router = useRouter();
     var query = router.query;
     const { colorMode } = useColorMode();
@@ -128,7 +130,7 @@ const MobileResults = () => {
         };
 
         fetchData();
-    }, []);
+    });
 
     return (
         <>
@@ -145,7 +147,7 @@ const MobileResults = () => {
                     <Text fontSize='3xl'>Stay updated on your industry</Text>
                 </Center>
                 <Center>
-                    <Link as={NextLink} href='/signup'>
+                    <Link as={NextLink} href='/signin'>
                         <Button
                             bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}
                             color='white'

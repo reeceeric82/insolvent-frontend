@@ -41,7 +41,7 @@ const CompanyResult = () => {
         };
 
         fetchData();
-    }, [])
+    })
 
 
     if (isLoading) {

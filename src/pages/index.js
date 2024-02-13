@@ -5,47 +5,61 @@ import DataTable from '@/components/DataTable';
 import Footer from '@/components/Footer';
 import { Box, Center, Grid, GridItem, Heading, Text, VStack, useColorMode } from '@chakra-ui/react'
 import { useMediaQuery } from '@chakra-ui/react'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
-const dummyData = [
-  {
-    title: 'Next buys furniture retailer Made.com for £3.4 million',
-    date: 'Nov 9, 2022',
-    content: 'LONDON, (Reuters) - British fashion retailer Next (NXT.L) will buy the Made.com (MADE.L) brand for 3.4 million pounds ($3.8 million) after the online furniture seller collapsed into administration, resulting in about 400 job losses.Made.com hit the buffers on Wednesday, running out of cash as a weaker economy deterred Britons from buying new furniture. Retail giant Next bought its brand, website and intellectual property from administrators PwC.'
-  },
-  {
-    title: 'Boohoo acquires Debenhams for £55 million',
-    date: 'Jan 25, 2021',
-    content: `LONDON, (Reuters) - Boohoo Group has bought Debenhams out of liquidation for £55 million, 
-    in a deal that will allow the 242-year-old department store brand to survive but its stores will shut down. 
-    Boohoo's deal only includes Debenhams' brand and other business assets including all the in-house brands and websites, 
-    and will see Boohoo take ownership of Debenhams' ecommerce operations and products around the start of its next financial year in March.`
-  },
-  {
-    title: 'Next buys Cath Kidson in £8.5 million deal',
-    date: 'Mar 28, 2025',
-    content: `
-    LONDON, (BBC) - Retailer Next has bought floral fashion brand Cath Kidston from administrators 
-    in a deal worth £8.5m. Next has taken on the name and intellectual property but not Cath Kidston's four shops. 
-    Administrators PwC said the shops would stay open while "operations are wound down", 
-    but added there would be redundancies.`
-  },
-]
+const newsApi = 'https://newsapi.org/v2/everything?q=insolvency&pageSize=3&apiKey=611b3750d35749f38e2cc97aeac1dc83';
+
+
+const removeHtmlTags = (html) => {
+  let doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || ' ';
+}
 
 
 const Home = () => {
   const title = "Home | Insolvent.ai";
   const [isMobile] = useMediaQuery("(max-width: 800px)");
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(newsApi);
+
+        if (response.data && response.data.articles) {
+          const dataArray = [];
+
+          for (const key in response.data.articles) {
+            if (response.data.articles.hasOwnProperty(key)) {
+              dataArray.push(response.data.articles[key]);
+            }
+          }
+          setData(dataArray);
+          setIsLoading(false);
+        } else {
+          console.error('Invalid Data')
+        }
+      } catch (error) {
+        console.error(`Error fetching data: ${error}`);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <Layout title={title}>
-      {isMobile ? <MobileHome /> : <DesktopHome />}
+      {isMobile ? <MobileHome data={data} isLoading={isLoading}/> : <DesktopHome data={data} isLoading={isLoading}/>}
     </Layout>
   )
 }
 
 
-const DesktopHome = () => {
+const DesktopHome = ({data, isLoading}) => {
   const { colorMode } = useColorMode();
   return (
     <>
@@ -81,12 +95,19 @@ const DesktopHome = () => {
           <Heading width='55%' align='center'>Many of the most savvy entrepreneurs in the UK
             grow their businesses by acquiring insolvent companies.</Heading>
         </Center>
-        <Grid templateColumns='repeat(3, 1fr)' gap={20} px={20} pt={10}>
-          {dummyData.map((item, idx) => (
-            <GridItem key={idx}>
-              <NewsBlob title={item.title} date={item.date} content={item.content} />
-            </GridItem>
-          ))}
+        <Grid templateColumns='repeat(3, 1fr)' gap={10} px={10} pt={10}>
+              {data.map((item, idx) => (
+                <GridItem key={idx} margin='1rem'>
+                  <NewsBlob
+                    isLoading={isLoading}
+                    title={item.title}
+                    date={item.publishedAt.substring(0,10)}
+                    description={removeHtmlTags(item.description)}
+                    content={removeHtmlTags(item.content.replace(/\[\+\d+\s*chars\]/g, ''))}
+                    url={item.url}
+                  />
+                </GridItem>
+              ))}
         </Grid>
       </Box>
 
@@ -121,7 +142,7 @@ const DesktopHome = () => {
 }
 
 
-const MobileHome = () => {
+const MobileHome = ({data, isLoading}) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -158,9 +179,16 @@ const MobileHome = () => {
             grow their businesses by acquiring insolvent companies.</Heading>
         </Center>
         <VStack mt='3rem'>
-          {dummyData.map((item, idx) => (
+          {data.map((item, idx) => (
             <GridItem key={idx} margin='1rem'>
-              <NewsBlob title={item.title} date={item.date} content={item.content} />
+              <NewsBlob 
+                isLoading={isLoading}
+                title={item.title}
+                date={item.publishedAt.substring(0, 10)}
+                description={removeHtmlTags(item.description)}
+                content={removeHtmlTags(item.content.replace(/\[\+\d+\s*chars\]/g, ''))}
+                url={item.url} 
+                />
             </GridItem>
           ))}
           {/* </Grid> */}

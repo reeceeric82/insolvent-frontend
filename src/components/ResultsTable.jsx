@@ -5,7 +5,7 @@ import LoadingAnimation from './LoadingAnimation';
 import { useRouter } from 'next/router';
 
 
-const ResultsTable = ({ isLoading, data }) => {
+const ResultsTable = ({ isLoading, data, isLoggedIn }) => {
     const { colorMode } = useColorMode();
     const itemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +44,7 @@ const ResultsTable = ({ isLoading, data }) => {
                                 <Th>Nature of Business</Th>
                                 <Th>Website URL</Th>
                                 <Th>Domain Auth</Th>
-                                <Th>Get Contact Info</Th>
+                                <Th>Get Info</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -75,7 +75,7 @@ const ResultsTable = ({ isLoading, data }) => {
                             <Th>Nature of Business</Th>
                             <Th>Website URL</Th>
                             <Th>Domain Auth</Th>
-                            <Th>Get Contact Info</Th>
+                            <Th>Get Info</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -96,11 +96,28 @@ const ResultsTable = ({ isLoading, data }) => {
                                     {item.domain_auth}
                                 </Td>
                                 <Th>
-                                    <Button
-                                        bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}
-                                        color='white'
-                                        _hover={colorMode === 'light' ? 'blue.200' : 'purple.200'}
-                                    >Contact</Button>
+                                {isLoggedIn ? (
+                                        <Link as={NextLink} onClick={() => handleClick(item.company_number)}>
+                                        <Button
+                                            bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}
+                                            color='white'
+                                            _hover={colorMode === 'light' ? 'blue.200' : 'purple.200'}
+                                        >
+                                            Info
+                                        </Button>
+                                    </Link>
+                                ) : (
+                                    <Link as={NextLink} href='/signin'>
+                                        <Button 
+                                            bg={colorMode === 'light' ? 'blue.400' : 'purple.400'}
+                                            color='white'
+                                            _hover={colorMode === 'light' ? 'blue.200' : 'purple.200'}
+                                        >
+                                            Info
+                                        </Button>
+                                    </Link>
+                                )
+                                }
                                 </Th>
                             </Tr>
                         ))}

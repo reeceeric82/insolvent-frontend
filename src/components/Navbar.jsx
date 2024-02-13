@@ -16,15 +16,15 @@ import {
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, HamburgerIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 
-const DesktopNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout }) => (
+const DesktopNav = ({ colorMode, toggleColorMode, isLoggedIn }) => (
     <Flex
         as='nav'
         align='center'
         justify='space-between'
         padding='0.5rem'
-        bg={colorMode === 'light' ? 'yellow.400' : 'blue.400'
-        }
+        bg={colorMode === 'light' ? 'yellow.400' : 'blue.400'}
         color='white'
         position='sticky'
         top='0'
@@ -54,14 +54,13 @@ const DesktopNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout 
                 {isLoggedIn ? (
                     <Button
                         aria-label='sign out'
-                        onClick={onLogout}
+                        onClick={() => signOut()}
                         variant='ghost'
                     >Sign Out</Button>
                 ) : (
                     <Link as={NextLink} href="/signin">
                         <Button
                             aria-label='sign in'
-                            onClick={onLogin}
                             variant='ghost'
                         >Sign In</Button>
                     </Link>
@@ -72,7 +71,7 @@ const DesktopNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout 
     </Flex >
 )
 
-const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout, isOpen, onClose }) => {
+const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, isOpen, onClose }) => {
     let screenWidth = window.innerWidth;
     function handleResize() {
         screenWidth = window.innerWidth;
@@ -138,7 +137,7 @@ const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout, 
                                 {isLoggedIn ? (
                                     <Button
                                         aria-label='Sign Out'
-                                        onClick={onLogout}
+                                        onClick={() => signOut()}
                                         variant='ghost'
                                         mt={3}
                                     >
@@ -148,7 +147,6 @@ const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout, 
                                     <Link as={NextLink} href='/signin'>
                                         <Button
                                             aria-label='Sign In'
-                                            onClick={onLogin}
                                             variant='ghost'
                                             mt={3}
                                         >
@@ -173,7 +171,8 @@ const MobileNav = ({ colorMode, toggleColorMode, isLoggedIn, onLogin, onLogout, 
 }
 
 
-const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
+const Navbar = () => {
+    const { data: session, status } = useSession();
     const { colorMode, toggleColorMode } = useColorMode();
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const [isMobile] = useMediaQuery('(max-width: 768px)');
@@ -188,9 +187,7 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
                 <MobileNav
                     colorMode={colorMode}
                     toggleColorMode={toggleColorMode}
-                    isLoggedIn={isLoggedIn}
-                    onLogin={onLogin}
-                    onLogout={onLogout}
+                    isLoggedIn={session?.user}
                     isOpen={isMobileNavOpen}
                     onClose={toggleMobileNav}
                 />
@@ -198,9 +195,7 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
                 <DesktopNav
                     colorMode={colorMode}
                     toggleColorMode={toggleColorMode}
-                    isLoggedIn={isLoggedIn}
-                    onLogin={onLogin}
-                    onLogout={onLogout}
+                    isLoggedIn={session?.user}
                 />
             )}
         </>
