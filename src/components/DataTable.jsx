@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Box, Center, Table, TableContainer, Thead, Tbody, Tr, Th, Td, Text, Skeleton, useColorMode, useMediaQuery } from "@chakra-ui/react";
 import Link from 'next/link';
 
-const apiUrl = "http://127.0.0.1:8000/temp";
+const apiUrl = "https://insolvent-api-f53jrkikia-ew.a.run.app/temp";
 
 const DataTable = () => {
     const { colorMode } = useColorMode();

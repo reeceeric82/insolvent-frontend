@@ -6,7 +6,7 @@ import Layout from '@/components/Layout';
 import NextLink from 'next/link';
 import Footer from '@/components/Footer';
 
-const apiUrl = 'http://127.0.0.1:8000/company/';
+const apiUrl = 'https://insolvent-api-f53jrkikia-ew.a.run.app/company/';
 
 const CompanyResult = () => {
     const router = useRouter();
@@ -87,7 +87,7 @@ const CompanyResult = () => {
                             <ListItem><span style={{fontWeight: 'bold'}}>{item.notice_code}</span> - {item.notice_status}</ListItem>
                             <ListItem><span style={{fontWeight: 'bold'}}>Published Date:</span> {item.published_date}</ListItem>
                             <ListItem><span style={{fontWeight: 'bold'}}>URL:</span>
-                                <Link pl='7px' as={NextLink} href={item.notice_url.replace('/id/', '/')} target='_blank' rel='noreferer'>{item.notice_url}</Link>
+                                    <Link pl='7px' as={NextLink} href={item.notice_url.replace('/id/', '/')} target='_blank' rel='noreferer'>{item.notice_url.replace('/id/', '/')}</Link>
                             </ListItem>
                         </List>
                         <br />

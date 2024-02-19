@@ -1,19 +1,26 @@
 import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
-import {signIn, useSession, signOut} from 'next-auth/react';
+import { signIn, useSession, signOut } from 'next-auth/react';
 import { FcGoogle } from "react-icons/fc";
 import { Box, Button, Center, Heading, Link, Text, useColorMode, useMediaQuery } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 
-const Signin = ({}) => {
+const Signin = ({ }) => {
     const { colorMode } = useColorMode();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
     const title = "Sigin | Insolvent"
+    const router = useRouter();
 
     const { data: session } = useSession()
 
     const handleSignInWithGoogle = () => {
-        signIn('google') // This will trigger the Google login flow
+        signIn('google', { callbackUrl: '/' });
+    };
+
+    // Redirect to home page if the user is already logged in
+    if (session?.user) {
+        router.push('/');
     }
 
     return (
@@ -21,16 +28,16 @@ const Signin = ({}) => {
             <Layout title={title}>
                 <Box>
                     <Center height='20vh'>
-                        {session?.user ? 
-                        <Heading>Welcome Back</Heading>
-                        :
-                        <Heading>Sign-in</Heading>
+                        {session?.user ?
+                            <Heading>Welcome Back</Heading>
+                            :
+                            <Heading>Sign-in</Heading>
                         }
                     </Center>
                     <Center>
                         <Box width={isMobile ? '80%' : '30%'}>
-                        { session?.user ? 
-                        <Button
+                            {session?.user ?
+                                <Button
                                     width='100%'
                                     onClick={() => signOut()}
                                     mt={4}
@@ -54,8 +61,8 @@ const Signin = ({}) => {
                                         <FcGoogle />
                                     </span>
                                     Sign in with Google
-                                </Button>                                
-                        } 
+                                </Button>
+                            }
                         </Box>
                     </Center>
                 </Box>

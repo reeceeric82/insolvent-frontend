@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import base from '../data/baseOptions';
 import axios from 'axios';
 
-const apiUrl = "http://127.0.0.1:8000/company-numbers";
+const apiUrl = "https://insolvent-api-f53jrkikia-ew.a.run.app/company-numbers";
 
 const AutoComplete = () => {
     const { colorMode } = useColorMode();

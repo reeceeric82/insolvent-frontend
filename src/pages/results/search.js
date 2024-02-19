@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { Box, Button, Center, Heading, Link, Text, useColorMode, useMediaQuery } from "@chakra-ui/react";
 
 
-const apiUrl = "http://127.0.0.1:8000/general/";
+const apiUrl = "https://insolvent-api-f53jrkikia-ew.a.run.app/general/";
 
 
 const Results = () => {
