@@ -5,61 +5,24 @@ import DataTable from '@/components/DataTable';
 import Footer from '@/components/Footer';
 import { Box, Center, Grid, GridItem, Heading, Text, VStack, useColorMode } from '@chakra-ui/react'
 import { useMediaQuery } from '@chakra-ui/react'
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
-
-const newsApi = 'https://newsapi.org/v2/everything?q=insolvency&pageSize=3&apiKey=611b3750d35749f38e2cc97aeac1dc83';
-
-
-const removeHtmlTags = (html) => {
-  let doc = new DOMParser().parseFromString(html, 'text/html');
-  return doc.body.textContent || ' ';
-}
+import newsItems from "../data/newsItems";
 
 
 const Home = () => {
+  console.log(newsItems)
   const title = "Home | Insolvent.ai";
   const [isMobile] = useMediaQuery("(max-width: 800px)");
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(newsApi);
-
-        if (response.data && response.data.articles) {
-          const dataArray = [];
-
-          for (const key in response.data.articles) {
-            if (response.data.articles.hasOwnProperty(key)) {
-              dataArray.push(response.data.articles[key]);
-            }
-          }
-          setData(dataArray);
-          setIsLoading(false);
-        } else {
-          console.error('Invalid Data')
-        }
-      } catch (error) {
-        console.error(`Error fetching data: ${error}`);
-      }
-    };
-
-    fetchData();
-  }, []);
 
 
   return (
     <Layout title={title}>
-      {isMobile ? <MobileHome data={data} isLoading={isLoading}/> : <DesktopHome data={data} isLoading={isLoading}/>}
+      {isMobile ? <MobileHome data={newsItems}/> : <DesktopHome data={newsItems}/>}
     </Layout>
   )
 }
 
 
-const DesktopHome = ({data, isLoading}) => {
+const DesktopHome = ({data}) => {
   const { colorMode } = useColorMode();
   return (
     <>
@@ -99,12 +62,9 @@ const DesktopHome = ({data, isLoading}) => {
               {data.map((item, idx) => (
                 <GridItem key={idx} margin='1rem'>
                   <NewsBlob
-                    isLoading={isLoading}
                     title={item.title}
-                    date={item.publishedAt.substring(0,10)}
-                    description={removeHtmlTags(item.description)}
-                    content={removeHtmlTags(item.content.replace(/\[\+\d+\s*chars\]/g, ''))}
-                    url={item.url}
+                    date={item.date}
+                    content={item.content}
                   />
                 </GridItem>
               ))}
@@ -142,7 +102,7 @@ const DesktopHome = ({data, isLoading}) => {
 }
 
 
-const MobileHome = ({data, isLoading}) => {
+const MobileHome = ({data}) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -182,12 +142,9 @@ const MobileHome = ({data, isLoading}) => {
           {data.map((item, idx) => (
             <GridItem key={idx} margin='1rem'>
               <NewsBlob 
-                isLoading={isLoading}
                 title={item.title}
-                date={item.publishedAt.substring(0, 10)}
-                description={removeHtmlTags(item.description)}
-                content={removeHtmlTags(item.content.replace(/\[\+\d+\s*chars\]/g, ''))}
-                url={item.url} 
+                date={item.date}
+                content={item.content}
                 />
             </GridItem>
           ))}
